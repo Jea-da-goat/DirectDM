@@ -1,0 +1,4 @@
+name: Privatemsg
+version: ${project.version}
+main: com.itndev.privatemsg.Main
+description: private msg
