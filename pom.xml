@@ -6,7 +6,7 @@
 
     <groupId>com.itndev</groupId>
     <artifactId>DirectDM</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.9</version>
     <packaging>jar</packaging>
 
     <name>DirectDM</name>

@@ -1,4 +1,4 @@
-name: Privatemsg
+name: DirectDM
 version: ${project.version}
 main: com.itndev.privatemsg.Main
 description: private msg

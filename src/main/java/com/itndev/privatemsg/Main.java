@@ -26,6 +26,13 @@ public class Main extends Plugin {
     public static Map<UUID, ArrayList<String>> ignore = new HashMap<>();
     public static Map<UUID, Boolean> staffspytoggle = new HashMap<>();
 
+
+    public static Main instance;
+
+    public static Main getInstance() {
+        return instance;
+    }
+
     public static ProxiedPlayer getConversation(ProxiedPlayer paramProxiedPlayer) {
         return !conversations.containsKey(paramProxiedPlayer.getUniqueId()) ? null : ProxyServer.getInstance().getPlayer(conversations.get(paramProxiedPlayer.getUniqueId()));
     }
@@ -51,6 +58,7 @@ public class Main extends Plugin {
     }
 
     public void onEnable() {
+        instance = this;
         getProxy().getPluginManager().registerListener(this, new listener());
         addDisabled();
         if(LoadYaml("privatemsg_ignore") != null) {
@@ -58,6 +66,7 @@ public class Main extends Plugin {
         }
         getProxy().getPluginManager().registerCommand(this, (Command)new ReplyCommand());
         getProxy().getPluginManager().registerCommand(this, (Command)new Messages());
+        getProxy().getPluginManager().registerCommand(this, (Command)new endcommand());
         getProxy().getPluginManager().registerCommand(this, (Command)new staffspy());
         getProxy().getPluginManager().registerCommand(this, (Command)new ignoreaddremove());
         getProxy().getPluginManager().registerCommand(this, (Command)new FakeCommand());
@@ -87,8 +96,11 @@ public class Main extends Plugin {
 
     public static Object LoadYaml(String filename) {
         try {
+            if(!Main.getInstance().getDataFolder().isDirectory()) {
+                Main.getInstance().getDataFolder().mkdir();
+            }
             Yaml yaml = new Yaml();
-            FileReader reader = new FileReader(filename + ".yml");
+            FileReader reader = new FileReader(java.nio.file.Paths.get(Main.getInstance().getDataFolder().getAbsolutePath(), filename + ".yml").toAbsolutePath().toString());
             return yaml.load(reader);
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,9 +111,13 @@ public class Main extends Plugin {
 
     public static void DumpYaml(Object data, String filename) {
         try {
+            if(!Main.getInstance().getDataFolder().isDirectory()) {
+                Main.getInstance().getDataFolder().mkdir();
+            }
             Yaml yaml = new Yaml(new Constructor(data.getClass()));
             FileWriter writer;
-            writer = new FileWriter(filename + ".yml");
+            //writer = new FileWriter(filename + ".yml");
+            writer = new FileWriter(java.nio.file.Paths.get(Main.getInstance().getDataFolder().getAbsolutePath(), filename + ".yml").toAbsolutePath().toString());
             yaml.dump(data, writer);
         } catch (Exception e) {
             e.printStackTrace();
