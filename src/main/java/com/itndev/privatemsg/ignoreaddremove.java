@@ -53,18 +53,28 @@ public class ignoreaddremove extends Command {
                     } else {
                         utils.sendmsg(p, "&l&f[&r&c귓말&l&f] &r&f온라인인 유저만 차단이 가능합니다");
                     }
+                } else {
+                    utils.sendmsg(p, "&f&l[&r&c귓말&f&l] &r&f명령어 사용법 &8: &f/차단 &7(추가/해제) &7[닉네임]");
+                    utils.sendmsg(p, "&f&l[&r&c귓말&f&l] &r&f또는 &8: &f/차단 목록");
                 }
             } else if(args.length == 1) {
                 if(args[0].equalsIgnoreCase("목록")) {
 
                     ArrayList<String> ignorednames = new ArrayList<>();
                     if(Main.ignore.containsKey(p.getUniqueId())) {
-                        Main.ignore.get(p.getUniqueId());
+                        ignorednames = Main.ignore.get(p.getUniqueId());
                     }
                     utils.sendmsg(p, "&m&7=====&r&f&l[&r&c차단목록&f&l]&r&m&7=====");
+                    if(ignorednames.isEmpty()) {
+                        utils.sendmsg(p, "- 차단한유저 &8: &f없음");
+                    }
                     for(String names : ignorednames) {
                         utils.sendmsg(p, "- 차단한유저 &8: &f" + names);
                     }
+                    utils.sendmsg(p, "&m&7=====&r&f&l[&r&c차단목록&f&l]&r&m&7=====");
+                } else {
+                    utils.sendmsg(p, "&f&l[&r&c귓말&f&l] &r&f명령어 사용법 &8: &f/차단 &7(추가/해제) &7[닉네임]");
+                    utils.sendmsg(p, "&f&l[&r&c귓말&f&l] &r&f또는 &8: &f/차단 목록");
                 }
 
             } else {
